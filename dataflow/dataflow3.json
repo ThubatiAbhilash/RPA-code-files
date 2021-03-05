@@ -1,0 +1,39 @@
+{
+	"name": "dataflow3",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText7",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText7",
+						"type": "DatasetReference"
+					},
+					"name": "badrowsdata"
+				},
+				{
+					"dataset": {
+						"referenceName": "DelimitedText7",
+						"type": "DatasetReference"
+					},
+					"name": "goodrowsdata"
+				}
+			],
+			"transformations": [
+				{
+					"name": "ConditionalSplit1"
+				}
+			],
+			"script": "source(output(\n\t\tEmpid as string,\n\t\tEmpname as string,\n\t\tjob as string,\n\t\tmanagerid as string,\n\t\t{date of birth} as string,\n\t\tcommission as string,\n\t\t{dept id} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource1 split(isNull(toDate({date of birth}, 'yyyy-mm-dd')),\n\tdisjoint: false) ~> ConditionalSplit1@(Errorrows, goodrows)\nConditionalSplit1@Errorrows sink(input(\n\t\tEmpid as string,\n\t\tEmpname as string,\n\t\tjob as string,\n\t\tmanagerid as string,\n\t\t{date of birth} as string,\n\t\tcommission as string,\n\t\t{dept id} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> badrowsdata\nConditionalSplit1@goodrows sink(input(\n\t\tEmpid as string,\n\t\tEmpname as string,\n\t\tjob as string,\n\t\tmanagerid as string,\n\t\t{date of birth} as string,\n\t\tcommission as string,\n\t\t{dept id} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> goodrowsdata"
+		}
+	}
+}

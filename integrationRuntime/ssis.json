@@ -1,0 +1,6 @@
+{
+	"name": "ssis",
+	"properties": {
+		"type": "SelfHosted"
+	}
+}

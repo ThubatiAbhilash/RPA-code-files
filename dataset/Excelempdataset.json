@@ -1,0 +1,55 @@
+{
+	"name": "Excelempdataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "empls",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet1",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "emp data.xlsx",
+				"container": "emptabledata"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "empno",
+				"type": "String"
+			},
+			{
+				"name": "ename",
+				"type": "String"
+			},
+			{
+				"name": "job",
+				"type": "String"
+			},
+			{
+				"name": "mgr",
+				"type": "String"
+			},
+			{
+				"name": "hiredate",
+				"type": "String"
+			},
+			{
+				"name": "sal",
+				"type": "String"
+			},
+			{
+				"name": "comm",
+				"type": "String"
+			},
+			{
+				"name": "deptno",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
